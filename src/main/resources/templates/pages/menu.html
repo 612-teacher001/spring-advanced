@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Spring 応用編</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<header th:replace="pages/parts/header"></header>
+	<main>
+		<article>
+			<h2>機能メニュ</h2>
+			<ul>
+				<li><a href="/advanced.spring.org/items/list">商品管理</a></li>
+				<li><a href="/advanced.spring.org/users/list">利用者管理</a></li>
+			</ul>
+		</article>
+	</main>
+	<footer th:replace="pages/parts/footer"></footer>
+</body>
+</html>
