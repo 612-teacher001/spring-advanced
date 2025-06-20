@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="pages/parts/head"></head>
+<body>
+	<header th:replace="pages/parts/header"></header>
+	<main>
+		<article>
+			<h2>商品管理</h2>
+			<section>
+				<h3>商品一覧</h3>
+				<th:block th:unless="${items}">
+				<p>商品は見つかりませんでした。</p>
+				</th:block>
+				<th:block th:if="${items}">
+				<p>[[${items.size()}]]件の商品が見つかりました。</p>
+				<table border="1">
+					<tr>
+						<th>商品ID</th>
+						<th>商品カテゴリ</th>
+						<th>商品名</th>
+						<th>価格</th>
+					</tr>
+					<tr th:each="item : ${items}">
+						<td th:text="${item.id}"></td>
+						<td th:text="${item.category}"></td>
+						<td th:text="${item.name}"></td>
+						<td th:text="${item.price} + '円'"></td>
+					</tr>
+				</table>
+				</th:block>
+				<p><a href="/advanced.spring.org/menu">機能メニュに戻る</a></p>
+			</section>
+		</article>
+	</main>
+	<footer th:replace="pages/parts/footer"></footer>
+</body>
+</html>
