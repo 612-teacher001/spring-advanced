@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +28,8 @@ public class ItemConrtroller {
 	@GetMapping("/list")
 	public String index(Model model) {
 		// itemsテーブルからすべての商品の商品リストを取得
-		List<Item> list = itemRepository.findAll();
-		// 商品kリストを共用のデータ置き場に登録
+		List<Item> list = itemRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+		// 商品リストを共用のデータ置き場に登録
 		model.addAttribute("items", list);
 		// 画面遷移
 		return "pages/items/list";
