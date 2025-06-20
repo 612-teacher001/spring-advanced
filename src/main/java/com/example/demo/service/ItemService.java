@@ -32,6 +32,18 @@ public class ItemService {
 	}
 
 	/**
+	 * カテゴリに合致する消費員を取得して表示用商品リストを返す
+	 * @param categoryCode 検索対象商品カテゴリコード
+	 * @return ItemDTOを要素とする表示用商品リスト
+	 */
+	public List<ItemDTO> getItemsByCategory(Integer categoryCode) {
+		return repository.findByCategoryCodeOrderById(categoryCode)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	/**
 	 * 商品エンティティを商品DTOに変換する
 	 * @param item 商品ティティ
 	 * @return 商品DTO

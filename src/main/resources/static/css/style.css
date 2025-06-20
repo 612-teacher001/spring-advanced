@@ -8,3 +8,20 @@ html body {
 	color: dimgray;
 	font-size: 1.4rem;
 }
+
+.category__item {
+	margin: 0 2.5px;
+}
+.category__item:first-child {
+	margin-left: 0;
+}
+.category__item:last-child {
+	margin-right: 0;
+}
+
+.no--linked {
+	pointer-events: none;
+	color: dimgray;
+	font-weight: bold;
+	text-decoration: none;
+}
