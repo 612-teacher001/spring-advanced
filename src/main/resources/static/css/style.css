@@ -18,3 +18,10 @@ html body {
 .category__item:last-child {
 	margin-right: 0;
 }
+
+.no--linked {
+	pointer-events: none;
+	color: dimgray;
+	font-weight: bold;
+	text-decoration: none;
+}

@@ -52,11 +52,10 @@ public class ItemConrtroller {
 			list = itemService.getItemsByCategory(categoryCode);
 		}
 		
-//		// 表示用ItemDTOを要素とする商品リストを取得
-//		List<ItemDTO> list = itemService.getAllItem();
 		// 各リストを共用のデータ置き場に登録
 		model.addAttribute("categories", categoryList);
 		model.addAttribute("items", list);
+		model.addAttribute("categoryCode", categoryCode);
 		// 画面遷移
 		return "pages/items/list";
 	}
