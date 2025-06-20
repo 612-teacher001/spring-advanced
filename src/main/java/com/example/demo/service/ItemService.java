@@ -28,13 +28,24 @@ public class ItemService {
 		List<Item> itemList = repository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 		List<ItemDTO> list = new ArrayList<ItemDTO>();
 		for (Item item : itemList) {
-			ItemDTO dto = new ItemDTO();
-			dto.setId(item.getId());
-			dto.setCategory(item.getCategoryName());
-			dto.setName(item.getName());
-			dto.setPrice(item.getPrice());
+			ItemDTO dto = convertToDTO(item);
 			list.add(dto);
 		}
 		return list;
 	}
+
+	/**
+	 * 商品エンティティを商品DTOに変換する
+	 * @param item 商品ティティ
+	 * @return 商品DTO
+	 */
+	private ItemDTO convertToDTO(Item item) {
+		ItemDTO dto = new ItemDTO();
+		dto.setId(item.getId());
+		dto.setCategory(item.getCategory().getName());
+		dto.setName(item.getName());
+		dto.setPrice(item.getPrice());
+		return dto;
+	}
+
 }
