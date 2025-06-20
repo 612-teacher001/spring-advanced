@@ -17,4 +17,11 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	List<Item> findByCategoryCodeOrderById(Integer categoryCode);
 
+	/**
+	 * 商品名のキーワード検索
+	 * @param keyword 検索キーワード：商品名に含まれる文字列
+	 * @return 商品エンティティリスト
+	 */
+	List<Item> findByNameContainingOrderById(String keyword);
+
 }

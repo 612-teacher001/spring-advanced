@@ -36,6 +36,7 @@ public class ItemConrtroller {
 	 */
 	@GetMapping("/list")
 	public String index(
+			@RequestParam(defaultValue = "") String keyword,
 			@RequestParam(defaultValue = "") Integer categoryCode,
 			Model model) {
 		// カテゴリリンク用のカテゴリリストを取得
@@ -44,12 +45,15 @@ public class ItemConrtroller {
 		// 表示用ItemDTOを要素とする商品リストの初期化
 		List<ItemDTO> list = null;
 		// リクエストパラメータによる処理の分岐
-		if (categoryCode == null) {
-			// categryCodeキーがnullの場合：全商品検索
-			list = itemService.getAllItem();
-		} else {
+		if (categoryCode != null) {
 			// categoryCodeキーが非nullの場合：カテゴリ検索
 			list = itemService.getItemsByCategory(categoryCode);
+		} else if (!keyword.isEmpty()) {
+			// keywordキーが非nullの場合：商品名のキーワード検索
+			list = itemService.getItemByKeyword(keyword);
+		} else {
+			// categryCodeキーがnullの場合：全商品検索
+			list = itemService.getAllItem();
 		}
 		
 		// 各リストを共用のデータ置き場に登録

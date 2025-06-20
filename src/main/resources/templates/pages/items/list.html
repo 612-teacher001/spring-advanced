@@ -8,6 +8,12 @@
 			<h2>商品管理</h2>
 			<section>
 				<h3>商品一覧</h3>
+				<nav class="search__criteria">
+					<form action="/advanced.spring.org/items/list" method="get">
+						<input type="text" name="keyword" placeholder="商品名"/>
+						<button>検索</button>
+					</form>
+				</nav>
 				<nav class="categry__list">
 					<a class="category__item" href="/advanced.spring.org/items/list">全商品</a>
 					<th:block th:each="category : ${categories}">
