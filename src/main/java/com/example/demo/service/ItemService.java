@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -26,10 +25,10 @@ public class ItemService {
 	 * @return ItemDTOを要素とする表示用商品リスト
 	 */
 	public List<ItemDTO> getAllItem() {
-		Stream<Item> stream = repository.findAll(Sort.by(Sort.Direction.ASC, "id")).stream();
-		Stream<ItemDTO> streamDTO = stream.map(this::convertToDTO);
-		List<ItemDTO> list = streamDTO.collect(Collectors.toList());
-		return list;
+		return repository.findAll(Sort.by(Sort.Direction.ASC, "id"))
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
 	}
 
 	/**
