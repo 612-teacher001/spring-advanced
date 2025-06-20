@@ -7,9 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dto.ItemDTO;
+import com.example.demo.entity.Category;
 import com.example.demo.repository.ItemRepository;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.ItemService;
 
 
@@ -21,6 +24,9 @@ public class ItemConrtroller {
 	ItemRepository itemRepository;
 	
 	@Autowired
+	CategoryService categoryService;
+	
+	@Autowired
 	ItemService itemService;
 	
 	/**
@@ -29,10 +35,27 @@ public class ItemConrtroller {
 	 * @return Thymeleafテンプレート名：pages/items/list.html
 	 */
 	@GetMapping("/list")
-	public String index(Model model) {
-		// 表示用ItemDTOを要素とする商品リストを取得
-		List<ItemDTO> list = itemService.getAllItem();
-		// 商品リストを共用のデータ置き場に登録
+	public String index(
+			@RequestParam(defaultValue = "") Integer categoryCode,
+			Model model) {
+		// カテゴリリンク用のカテゴリリストを取得
+		List<Category> categoryList = categoryService.getAllCategories();
+		
+		// 表示用ItemDTOを要素とする商品リストの初期化
+		List<ItemDTO> list = null;
+		// リクエストパラメータによる処理の分岐
+		if (categoryCode == null) {
+			// categryCodeキーがnullの場合：全商品検索
+			list = itemService.getAllItem();
+		} else {
+			// categoryCodeキーが非nullの場合：カテゴリ検索
+			list = itemService.getItemsByCategory(categoryCode);
+		}
+		
+//		// 表示用ItemDTOを要素とする商品リストを取得
+//		List<ItemDTO> list = itemService.getAllItem();
+		// 各リストを共用のデータ置き場に登録
+		model.addAttribute("categories", categoryList);
 		model.addAttribute("items", list);
 		// 画面遷移
 		return "pages/items/list";
