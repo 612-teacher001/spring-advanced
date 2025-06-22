@@ -22,7 +22,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer role;
+	@ManyToOne
+	@JoinColumn(name = "role")
+	private Role role;
 	private String name;
 	@ManyToOne
 	@JoinColumn(name = "prefecture")
