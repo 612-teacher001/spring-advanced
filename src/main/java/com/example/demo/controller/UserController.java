@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.entity.User;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -26,7 +26,7 @@ public class UserController {
 	@GetMapping("/list")
 	public String index(Model model) {
 		// すべての利用者を取得
-		List<User> list = userService.getAllUsers();
+		List<UserDTO> list = userService.getAllUsers();
 		// 各リストを共用のデータ置き場に登録
 		model.addAttribute("users", list);
 		// 画面遷移
