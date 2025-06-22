@@ -43,6 +43,11 @@ public class ItemService {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * 商品名のキーワード検索
+	 * @param keyword 検索キーワード
+	 * @return ItemDTOを要素とする表示用商品リスト
+	 */
 	public List<ItemDTO> getItemByKeyword(String keyword) {
 		return repository.findByNameContainingOrderById(keyword)
 				.stream()
@@ -50,6 +55,11 @@ public class ItemService {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * 最小価格以上の価格の商品を検索する
+	 * @param minPrice 最小価格
+	 * @return ItemDTOを要素とする表示用商品リスト
+	 */
 	public List<ItemDTO> getItemsByPriceLower(Integer minPrice) {
 		return repository.findByPriceGreaterThanEqualOrderByPrice(minPrice)
 				.stream()
@@ -57,6 +67,12 @@ public class ItemService {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * 最小価格と最大価格による価格の範囲検索
+	 * @param minPrice 最小価格
+	 * @param maxPrice 最大価格
+	 * @return ItemDTOを要素とする表示用商品リスト
+	 */
 	public List<ItemDTO> getItemsByPriceInRange(Integer minPrice, Integer maxPrice) {
 		return repository.findByPriceBetweenOrderByPrice(minPrice, maxPrice)
 				.stream()
@@ -64,6 +80,11 @@ public class ItemService {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * 最大価格以下の価格の商品を検索する
+	 * @param maxPrice 最大価格
+	 * @return ItemDTOを要素とする表示用商品リスト
+	 */
 	public List<ItemDTO> getItemsByPriceUpper(Integer maxPrice) {
 		return repository.findByPriceLessThanEqualOrderByPrice(maxPrice)
 				.stream()
