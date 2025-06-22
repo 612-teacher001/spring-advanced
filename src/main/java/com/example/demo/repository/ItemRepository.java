@@ -24,4 +24,27 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	List<Item> findByNameContainingOrderById(String keyword);
 
+
+	/**
+	 * 最小価格より高い価格の商品を取得する：SELECT * FROM items WHERE price >= :minPrice ORDER BY price
+	 * @param minPrice 最小価格
+	 * @return 商品エンティティリスト
+	 */
+	List<Item> findByPriceGreaterThanEqualOrderByPrice(Integer minPrice);
+
+	/**
+	 * 最小価格と最大価格の範囲に入っている価格の商品を取得する：SELECT * FROM items WHERE price BETWEEN :minPrice AND>= :maxPrice ORDER BY price
+	 * @param minPrice 最小価格
+	 * @param maxPrice 最大価格
+	 * @return 商品エンティティリスト
+	 */
+	List<Item> findByPriceBetweenOrderByPrice(Integer minPrice, Integer maxPrice);
+
+	/**
+	 * 最大価格より低い価格の商品を取得する：SELECT * FROM items WHERE price <= :maxPrice ORDER BY price
+	 * @param maxPrice 最大価格
+	 * @return 商品エンティティリスト
+	 */
+	List<Item> findByPriceLessThanEqualOrderByPrice(Integer maxPrice);
+
 }

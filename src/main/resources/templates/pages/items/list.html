@@ -10,11 +10,20 @@
 				<h3>商品一覧</h3>
 				<nav class="search__criteria">
 					<form action="/advanced.spring.org/items/list" method="get">
-						<input type="text" name="keyword" placeholder="商品名"/>
+						<input class="criteria criteria--long" type="text" name="keyword" placeholder="商品名" 
+							th:value="${keyword}" />
+						<button>検索</button>
+					</form>
+					<form action="/advanced.spring.org/items/list" method="get">
+						<input class="criteria" type="number" name="minPrice" placeholder="最小価格" 
+							th:value="${minPrice}" />
+						～
+						<input class="criteria" type="number" name="maxPrice" placeholder="最大価格" 
+							th:value="${maxPrice}" />
 						<button>検索</button>
 					</form>
 				</nav>
-				<nav class="categry__list">
+				<nav class="category__list">
 					<a class="category__item" href="/advanced.spring.org/items/list">全商品</a>
 					<th:block th:each="category : ${categories}">
 					  <a class="category__item"

@@ -9,6 +9,17 @@ html body {
 	font-size: 1.4rem;
 }
 
+.criteria {
+	width: 70px;
+	margin: 2.5px 0;
+}
+.criteria--long {
+	width: inherit;
+}
+
+.category__list {
+	margin-top: 7.5px;
+}
 .category__item {
 	margin: 0 2.5px;
 }
