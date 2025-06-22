@@ -15,4 +15,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	 */
 	List<User> findAllByOrderById();
 
+	/**
+	 * 都道府県別利用者を利用者IDの照準に取得する
+	 * SELECT * FROM users WHERE prefecture = :prefectureCode ORDER BY id 
+	 * @param prefectureCode 検索対象都道府県コード
+	 * @return 利用者エンティティリスト
+	 */
+	List<User> findByPrefectureCodeOrderById(String prefectureCode);
+
 }
