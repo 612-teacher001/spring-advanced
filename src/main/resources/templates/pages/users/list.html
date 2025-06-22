@@ -8,6 +8,27 @@
 			<h2>利用者管理</h2>
 			<section>
 				<h3>利用者一覧</h3>
+				<nav class="search__criteria">
+					<form action="/advanced.spring.org/users/list" method="get">
+						<select name="prefectureCode">
+							<option value="">--- 都道府県 ---</option>
+							<th:block th:each="prefecture : ${prefectures}">
+								<option th:value="${prefecture.code}"
+										th:text="${prefecture.code} + '：' + ${prefecture.name}"
+										th:selected="${prefecture.code == prefectureCode}"></option>
+							</th:block>
+						</select>
+						<th:block th:each="role : ${roles}">
+							<input type="radio" name="role"
+								   th:value="${role.id}"
+								   th:id="'role_' + ${role.id}"
+								   th:checked="${role.id == roleId}" />
+							<label th:for="'role_' + ${role.id}"
+								   th:text="${role.name}"></label>
+						</th:block>
+						<button>検索</button>
+					</form>
+				</nav>
 				<th:block th:unless="${users}">
 					<p>利用者は見つかりませんでした。</p>
 				</th:block>

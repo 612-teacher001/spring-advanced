@@ -28,6 +28,38 @@ public class UserService {
 	}
 
 	/**
+	 * 都道府県別の利用者を取得して表示用利用者リストを返す
+	 * @param prefectureCode 都道府県コード
+	 * @return 利用者DTOを要素とする表示用利用者リスト
+	 */
+	public List<UserDTO> getByPrefecture(String prefectureCode) {
+		return repository.findByPrefectureCodeOrderById(prefectureCode)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * 都道府県別権限別の表示用使用者リストを返す
+	 * @param prefectureCode 都道府県コード
+	 * @param role 権限コード
+	 * @return 利用者DTOを要素とする表示用利用者リスト
+	 */
+	public List<UserDTO> getByPrefectureAndRole(String prefectureCode, Integer role) {
+		return repository.findByPrefectureCodeAndRoleIdOrderById(prefectureCode, role)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+	
+	public List<UserDTO> getByRole(Integer role) {
+		return repository.findByRoleIdOrderById(role)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	/**
 	 * 利用者エンティティを利用者DTOに変換する
 	 * @param user 利用者エンティティ
 	 * @return 利用者DTO
@@ -45,6 +77,5 @@ public class UserService {
 		dto.setPassword(user.getPassword());
 		return dto;
 	}
-	
-	
+
 }
