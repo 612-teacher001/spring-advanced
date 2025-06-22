@@ -43,6 +43,34 @@ public class ItemService {
 				.collect(Collectors.toList());
 	}
 
+	public List<ItemDTO> getItemByKeyword(String keyword) {
+		return repository.findByNameContainingOrderById(keyword)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	public List<ItemDTO> getItemsByPriceLower(Integer minPrice) {
+		return repository.findByPriceGreaterThanEqualOrderByPrice(minPrice)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	public List<ItemDTO> getItemsByPriceInRange(Integer minPrice, Integer maxPrice) {
+		return repository.findByPriceBetweenOrderByPrice(minPrice, maxPrice)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	public List<ItemDTO> getItemsByPriceUpper(Integer maxPrice) {
+		return repository.findByPriceLessThanEqualOrderByPrice(maxPrice)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
 	/**
 	 * 商品エンティティを商品DTOに変換する
 	 * @param item 商品ティティ

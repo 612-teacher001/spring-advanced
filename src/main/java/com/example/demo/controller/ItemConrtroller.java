@@ -36,6 +36,9 @@ public class ItemConrtroller {
 	 */
 	@GetMapping("/list")
 	public String index(
+			@RequestParam(defaultValue = "") Integer minPrice,
+			@RequestParam(defaultValue = "") Integer maxPrice,
+			@RequestParam(defaultValue = "") String keyword,
 			@RequestParam(defaultValue = "") Integer categoryCode,
 			Model model) {
 		// カテゴリリンク用のカテゴリリストを取得
@@ -44,18 +47,33 @@ public class ItemConrtroller {
 		// 表示用ItemDTOを要素とする商品リストの初期化
 		List<ItemDTO> list = null;
 		// リクエストパラメータによる処理の分岐
-		if (categoryCode == null) {
-			// categryCodeキーがnullの場合：全商品検索
-			list = itemService.getAllItem();
-		} else {
+		if (categoryCode != null) {
 			// categoryCodeキーが非nullの場合：カテゴリ検索
 			list = itemService.getItemsByCategory(categoryCode);
+		} else if (!keyword.isEmpty()) {
+			// keywordキーが非nullの場合：商品名のキーワード検索
+			list = itemService.getItemByKeyword(keyword);
+		} else if (minPrice != null && maxPrice == null) {
+			// 最小価格が指定されている場合
+			list = itemService.getItemsByPriceLower(minPrice);
+		} else if (minPrice != null && maxPrice != null) {
+			// 最小価格と最大価格が指定されている場合
+			list = itemService.getItemsByPriceInRange(minPrice, maxPrice);
+		} else if (maxPrice != null) {
+			// 最大価格が指定されている場合
+			list = itemService.getItemsByPriceUpper(maxPrice);
+		} else {
+			// categryCodeキーがnullの場合：全商品検索
+			list = itemService.getAllItem();
 		}
 		
 		// 各リストを共用のデータ置き場に登録
 		model.addAttribute("categories", categoryList);
 		model.addAttribute("items", list);
 		model.addAttribute("categoryCode", categoryCode);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("minPrice", minPrice);
+		model.addAttribute("maxPrice", maxPrice);
 		// 画面遷移
 		return "pages/items/list";
 	}
