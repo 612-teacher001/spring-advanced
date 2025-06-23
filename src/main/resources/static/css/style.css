@@ -16,9 +16,22 @@ html body {
 .criteria--long {
 	width: inherit;
 }
+.criteria__partial_match {
+	margin: 5px 0;
+}
+
+.criteria__partial_match input {
+	width: 115px;
+}
+.criteria__foreign_key {
+	margin-bottom: 7.5px;
+}
+.criteria__partial_match {
+	margin-top: 12.5px; 
+}
 
 .category__list {
-	margin-top: 7.5px;
+	margin-top: 12.5px;
 }
 .category__item {
 	margin: 0 2.5px;

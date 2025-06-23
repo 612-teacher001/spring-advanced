@@ -38,6 +38,7 @@ public class UserController {
 	public String index(
 			@RequestParam(defaultValue = "") String prefectureCode,
 			@RequestParam(defaultValue = "") Integer role,
+			@RequestParam(defaultValue = "") String name,
 			Model model) {
 		// 都道府県選択用都道府県リストを取得
 		List<Prefecture> prefectureList = prefectureService.getAllPrefectures();
@@ -46,22 +47,26 @@ public class UserController {
 		
 		// リクエストパラメータによる処理の分岐
 		List<UserDTO> list = null;
-		if (!prefectureCode.isEmpty()) {
-			if (role != null) {
-				// 都道府県別権限別利用者検索
-				list = userService.getByPrefectureAndRole(prefectureCode, role);
-			} else {
-				// 都道府県別利用者検索
-				list = userService.getByPrefecture(prefectureCode);
-			}
+		if (!prefectureCode.isEmpty() && role != null) {
+			// 都道府県別権限別利用者検索
+			list = userService.getByPrefectureAndRole(prefectureCode, role);
+		} else if (!prefectureCode.isEmpty()) {
+			// 都道府県別利用者検索
+			list = userService.getByPrefecture(prefectureCode);
+		} else if (role != null) {
+			// 権限別利用者検索
+			list = userService.getByRole(role);
 		} else {
-			if (role != null) {
-				// 権限別利用者検索
-				list = userService.getByRole(role);
-			} else {
-				// すべての利用者を取得
-				list = userService.getAllUsers();
-			}
+			// すべての利用者を取得
+			list = userService.getAllUsers();
+		}
+		
+		if (!name.isEmpty()) {
+			// 氏名あいまい検索
+			list = userService.getByName(name);
+		} else {
+			// すべての利用者を取得
+			list = userService.getAllUsers();
 		}
 		
 		// 各リストを共用のデータ置き場に登録
@@ -70,6 +75,7 @@ public class UserController {
 		model.addAttribute("prefectureCode", prefectureCode);
 		model.addAttribute("roles", roleList);
 		model.addAttribute("roleId", role);
+		model.addAttribute("name", name);
 		
 		// 画面遷移
 		return "pages/users/list";
