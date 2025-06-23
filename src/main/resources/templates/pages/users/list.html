@@ -10,6 +10,7 @@
 				<h3>利用者一覧</h3>
 				<nav class="search__criteria">
 					<form class="criteria__foreign_key" action="/advanced.spring.org/users/list" method="get">
+						<label class="ul__text--bold">外部キー検索：</label>
 						<select name="prefectureCode">
 							<option value="">--- 都道府県 ---</option>
 							<th:block th:each="prefecture : ${prefectures}">
@@ -29,7 +30,9 @@
 						<button>検索</button>
 					</form>
 					<form class="criteria__partial_match" action="/advanced.spring.org/users/list" method="get">
-						<input type="text" name="name" placeholder="氏名" th:value="${name}" />
+						<label class="ul__text--bold">あいまい検索：</label>
+						<input type="text" name="name" placeholder="氏名" th:value="${name}"/>
+						<input type="text" name="address" placeholder="住所" th:value="${address}" />
 						<button>検索</button>
 					</form>
 				</nav>

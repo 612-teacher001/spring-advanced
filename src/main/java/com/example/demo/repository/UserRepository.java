@@ -47,4 +47,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	 */
 	List<User> findByNameContainingOrderById(String name);
 
+	/**
+	 * 氏名住所あいまい検索で利用者IDの昇順に取得する
+	 * @param name 検索氏名
+	 * @param addresss 検索住所
+	 * @return 利用者エンティティリスト
+	 */
+	List<User> findByNameContainingAndAddressContainingOrderById(String name, String address);
+
 }

@@ -39,6 +39,7 @@ public class UserController {
 			@RequestParam(defaultValue = "") String prefectureCode,
 			@RequestParam(defaultValue = "") Integer role,
 			@RequestParam(defaultValue = "") String name,
+			@RequestParam(defaultValue = "") String address,
 			Model model) {
 		// 都道府県選択用都道府県リストを取得
 		List<Prefecture> prefectureList = prefectureService.getAllPrefectures();
@@ -57,16 +58,18 @@ public class UserController {
 			// 権限別利用者検索
 			list = userService.getByRole(role);
 		} else {
-			// すべての利用者を取得
-			list = userService.getAllUsers();
-		}
-		
-		if (!name.isEmpty()) {
-			// 氏名あいまい検索
-			list = userService.getByName(name);
-		} else {
-			// すべての利用者を取得
-			list = userService.getAllUsers();
+			if (!name.isEmpty()) {
+				if (!address.isEmpty()) {
+					// 氏名住所あいまい検索
+					list = userService.getByNameAndAddress(name, address);
+				} else {
+					// 氏名あいまい検索
+					list = userService.getByName(name);
+				}
+			} else {
+				// すべての利用者を取得
+				list = userService.getAllUsers();
+			}
 		}
 		
 		// 各リストを共用のデータ置き場に登録
@@ -76,6 +79,7 @@ public class UserController {
 		model.addAttribute("roles", roleList);
 		model.addAttribute("roleId", role);
 		model.addAttribute("name", name);
+		model.addAttribute("address", address);
 		
 		// 画面遷移
 		return "pages/users/list";

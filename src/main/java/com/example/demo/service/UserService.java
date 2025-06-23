@@ -77,6 +77,19 @@ public class UserService {
 	}
 
 	/**
+	 * 氏名住所あいまい検索
+	 * @param name 検索氏名
+	 * @param address 検索時住所
+	 * @return 利用者DTOを要素とする表示用利用者リスト
+	 */
+	public List<UserDTO> getByNameAndAddress(String name, String address) {
+		return repository.findByNameContainingAndAddressContainingOrderById(name, address)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	/**
 	 * 利用者エンティティを利用者DTOに変換する
 	 * @param user 利用者エンティティ
 	 * @return 利用者DTO
