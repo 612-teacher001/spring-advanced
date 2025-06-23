@@ -51,9 +51,39 @@ public class UserService {
 				.map(this::convertToDTO)
 				.collect(Collectors.toList());
 	}
-	
+
+	/**
+	 * 権限別の表示用利用者リストを返す
+	 * @param role 権限コード
+	 * @return 利用者DTOを要素とする表示用利用者リスト
+	 */
 	public List<UserDTO> getByRole(Integer role) {
 		return repository.findByRoleIdOrderById(role)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	/**
+	 * 氏名あいまい検索
+	 * @param name 検索氏名
+	 * @return 利用者DTOを要素とする表示用利用者リスト
+	 */
+	public List<UserDTO> getByName(String name) {
+		return repository.findByNameContainingOrderById(name)
+				.stream()
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	/**
+	 * 氏名住所あいまい検索
+	 * @param name 検索氏名
+	 * @param address 検索時住所
+	 * @return 利用者DTOを要素とする表示用利用者リスト
+	 */
+	public List<UserDTO> getByNameAndAddress(String name, String address) {
+		return repository.findByNameContainingAndAddressContainingOrderById(name, address)
 				.stream()
 				.map(this::convertToDTO)
 				.collect(Collectors.toList());

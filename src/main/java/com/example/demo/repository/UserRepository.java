@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	List<User> findByPrefectureCodeOrderById(String prefectureCode);
 
 	/**
-	 * 都道府県別権限別利用者を利用者IDの照準に取得する
+	 * 都道府県別権限別利用者を利用者IDの昇順に取得する
 	 * SELECT * FROM users WHERE prefecture = :prefecctureCode AND role = :role
 	 * @param prefectureCode 検索対象都道府県コード
 	 * @param role 検索対象権限コード
@@ -33,11 +33,26 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	List<User> findByPrefectureCodeAndRoleIdOrderById(String prefectureCode, Integer role);
 
 	/**
-	 * 権限別利用者を利用者IDの照準に取得する
+	 * 権限別利用者を利用者IDの昇順に取得する
 	 * SELECT * FROM users WHERE role = :role ORDER BY id
 	 * @param role 検索対象権限コード
 	 * @return 利用者エンティティリスト
 	 */
 	List<User> findByRoleIdOrderById(Integer role);
+
+	/**
+	 * 氏名あいまい検索で利用者IDの昇順に取得する
+	 * @param name 検索氏名
+	 * @return 利用者エンティティリスト
+	 */
+	List<User> findByNameContainingOrderById(String name);
+
+	/**
+	 * 氏名住所あいまい検索で利用者IDの昇順に取得する
+	 * @param name 検索氏名
+	 * @param addresss 検索住所
+	 * @return 利用者エンティティリスト
+	 */
+	List<User> findByNameContainingAndAddressContainingOrderById(String name, String address);
 
 }
