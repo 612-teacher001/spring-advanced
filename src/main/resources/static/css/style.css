@@ -43,6 +43,20 @@ html body {
 	margin-right: 0;
 }
 
+.link__pagenations--list {
+	display: inline;
+	list-style-type: none;
+	margin: 0;
+	padding :0;
+}
+.link__pagenations--item {
+	display: inline;
+}
+
+.table__caption--pagenation {
+	text-align: left;
+}
+
 .no--linked {
 	pointer-events: none;
 	color: dimgray;

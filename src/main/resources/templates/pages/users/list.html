@@ -40,8 +40,24 @@
 					<p>利用者は見つかりませんでした。</p>
 				</th:block>
 				<th:block th:if="${users}">
-					<p>[[${users.size()}]]人の利用者が見つかりました。</p>
+					<p th:if="${offset}">[[${offset} + 1]]ページ目の[[${users.size()}]]人の利用者が見つかりました。</p>
+					<p th:unless="${offset}">[[${users.size()}]]人の利用者が見つかりました。</p>
 					<table border="1">
+						<caption class="table__caption--pagenation">
+							ページネーション：
+							<ol class="link__pagenations--list">
+								<li class="link__pagenations--item"
+									th:each="i : ${#numbers.sequence(0, totalPage - 1)}">
+									<a class="no--linked"
+									   th:if="${i == offset}"
+									   th:href="@{/advanced.spring.org/users/list(offset=${i})}"
+									   th:text="${i + 1}"></a>
+								 	<a th:unless="${i == offset}"
+								       th:href="@{/advanced.spring.org/users/list(offset=${i})}"
+								       th:text="${i + 1}"></a>
+								</li>
+							</ol>
+						</caption>
 						<tr>
 							<th>利用者ID</th>
 							<th>権限コード</th>

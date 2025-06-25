@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.UserDTO;
@@ -13,6 +16,11 @@ import com.example.demo.repository.UserRepository;
 @Service
 public class UserService {
 
+	/**
+	 * クラス定数
+	 */
+	private static final Integer DEFAULT_PAGE_LIMIT = 10; // １画面内レコード表示数
+	
 	@Autowired
 	UserRepository repository;
 	
@@ -87,6 +95,27 @@ public class UserService {
 				.stream()
 				.map(this::convertToDTO)
 				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * ページネーション表示用利用者リストを取得する
+	 * @param offset 全レコード中の相対的表示位置（表示ページ）
+	 * @return 利用者DTOを要素とする表示用利用者リスト
+	 */
+	public List<UserDTO> getUserWithLimit(Integer offset) {
+		PageRequest pageRequest = PageRequest.of(offset, DEFAULT_PAGE_LIMIT, Sort.by("id").ascending());
+		Page<User> page = repository.findAll(pageRequest);
+		return page.stream()
+				   .map(this::convertToDTO)
+				   .collect(Collectors.toList());
+	}
+
+	/**
+	 * 表示用ページ数を取得する
+	 * @return 表示用ページ数
+	 */
+	public Long getTotalPage() {
+		return (long) Math.ceil((double) repository.count() / DEFAULT_PAGE_LIMIT);
 	}
 
 	/**
