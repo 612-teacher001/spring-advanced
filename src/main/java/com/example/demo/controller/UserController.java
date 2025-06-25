@@ -40,6 +40,8 @@ public class UserController {
 			@RequestParam(defaultValue = "") Integer role,
 			@RequestParam(defaultValue = "") String name,
 			@RequestParam(defaultValue = "") String address,
+			@RequestParam(defaultValue = "") Integer offset,
+			@RequestParam(defaultValue = "") Integer total,
 			Model model) {
 		// 都道府県選択用都道府県リストを取得
 		List<Prefecture> prefectureList = prefectureService.getAllPrefectures();
@@ -67,8 +69,13 @@ public class UserController {
 					list = userService.getByName(name);
 				}
 			} else {
-				// すべての利用者を取得
-				list = userService.getAllUsers();
+				if (offset != null) {
+					// ページネーション表示
+					list = userService.getUserWithLimit(offset);
+				} else {
+					// すべての利用者を取得
+					list = userService.getAllUsers();
+				}
 			}
 		}
 		
@@ -80,6 +87,8 @@ public class UserController {
 		model.addAttribute("roleId", role);
 		model.addAttribute("name", name);
 		model.addAttribute("address", address);
+		model.addAttribute("offset", offset);
+		model.addAttribute("totalPage", userService.getTotalPage()); // トータルページ数（表示に必要な画面数）
 		
 		// 画面遷移
 		return "pages/users/list";
